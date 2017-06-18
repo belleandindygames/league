@@ -7,10 +7,25 @@ h1 {
     text-align: center;
 }
 
+img{
+    display: block;
+    margin: auto;
+    width: 25%;
+}
+
 p {
     font-family: verdana;
     font-size: 20px;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
 }
 .top-pad{
     padding-top: 50px;
+}
+
+h6{
+    text-align: center;
 }
