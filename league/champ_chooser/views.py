@@ -16,19 +16,28 @@ def Get_Summoner_V3(request):
         form = submit_summoner_info(request.POST)
         if form.is_valid():
             name = form.cleaned_data['name']
-            #lookup name in db before doing get request if found render oage with correct data
+            num_results = Summoner_V3.objects.filter(name__iexact=name).count()
+            print(name)
+            print(num_results)
+            if num_results == 1:
+                print('record exists')
+                summoner = Summoner_V3.objects.get(name__iexact=name)
+                print(summoner.name)
+                return render(request, 'summoner_details.html', {'summoner': summoner})
+            else:
+                # lookup name in db before doing get request if found render oage with correct data
 
-            region = 'na1'
-            url = 'https://' + region +'.api.riotgames.com/lol/summoner/v3/summoners/by-name/' + name
-            headers = { 'X-Riot-Token': settings.RIOT_API_KEY }
-            r = requests.get(url, headers=headers)
-            json = r.json()
-            print(json['accountId'])
-            serializer = Summoner_V3_Serializer(data=json)
-            if serializer.is_valid():
-                summoner = serializer.save()
-                print(summoner)
-                return render(request, 'summoner_details.html', { 'summoner': summoner, 'json': json})
+                region = 'na1'
+                url = 'https://' + region +'.api.riotgames.com/lol/summoner/v3/summoners/by-name/' + name
+                headers = { 'X-Riot-Token': settings.RIOT_API_KEY }
+                r = requests.get(url, headers=headers)
+                json = r.json()
+                print(json['accountId'])
+                serializer = Summoner_V3_Serializer(data=json)
+                if serializer.is_valid():
+                    summoner = serializer.save()
+                    print(summoner)
+                    return render(request, 'summoner_details.html', { 'summoner': summoner, 'json': json})
 
     else:
         form = submit_summoner_info()
