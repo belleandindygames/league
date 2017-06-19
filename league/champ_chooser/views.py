@@ -8,6 +8,7 @@ from django.shortcuts import render
 from .forms import submit_summoner_info
 from serializers import Summoner_V3_Serializer
 from models import Summoner_V3
+from datetime import datetime
 
 # Create your views here.
 def Get_Summoner_V3(request):
