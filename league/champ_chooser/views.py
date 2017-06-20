@@ -28,7 +28,7 @@ def Get_Summoner_V3(request):
             else:
                 # lookup name in db before doing get request if found render oage with correct data
 
-                region = 'na1'
+                region = form.cleaned_data['region']
                 url = 'https://' + region +'.api.riotgames.com/lol/summoner/v3/summoners/by-name/' + name
                 headers = { 'X-Riot-Token': settings.RIOT_API_KEY }
                 r = requests.get(url, headers=headers)
