@@ -2,7 +2,8 @@
 
 {% block content %}
 
-    <form action="/summoner/" method="POST">
+<h3>LIVE MATCH</h3>
+    <form action="/live/" method="POST">
         {% csrf_token %}
         {{ form }}
         <input type="submit" value="Save"/>

@@ -16,9 +16,10 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from champ_chooser.views import Get_Summoner_V3
+from champ_chooser.views import get_summoner_v3, live_match
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^', Get_Summoner_V3),
+    url(r'^summoner/', get_summoner_v3),
+    url(r'^live/', live_match),
 ]

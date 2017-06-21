@@ -7,12 +7,14 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.shortcuts import render
 from .forms import submit_summoner_info
-from serializers import Summoner_V3_Serializer
+from serializers import Summoner_V3_Serializer, LiveMatchSerializer
 from models import Summoner_V3
 from datetime import datetime
 
 # Create your views here.
-def Get_Summoner_V3(request):
+
+
+def get_summoner_v3(request):
 
     if request.method == "POST":
         form = submit_summoner_info(request.POST)
@@ -34,14 +36,13 @@ def Get_Summoner_V3(request):
                     headers = {'X-Riot-Token': settings.RIOT_API_KEY}
                     r = requests.get(url, headers=headers)
                     json = r.json()
+                    print(json.id)
                     serializer = Summoner_V3_Serializer(data=json)
 
                     if serializer.is_valid():
                         summoner = serializer.save()
                         summoner.region = region
                         summoner.save()
-
-                        print(summoner)
 
                         return render(request, 'summoner_details.html', {'summoner': summoner})
 
@@ -55,13 +56,11 @@ def Get_Summoner_V3(request):
                 r = requests.get(url, headers=headers)
                 json = r.json()
                 serializer = Summoner_V3_Serializer(data=json)
-
+                print(json)
                 if serializer.is_valid():
                     summoner = serializer.save()
                     summoner.region = region
                     summoner.save()
-
-                    print(summoner)
 
                     return render(request, 'summoner_details.html', {'summoner': summoner})
 
@@ -71,7 +70,57 @@ def Get_Summoner_V3(request):
     else:
         form = submit_summoner_info()
 
-
-
     return render(request, 'index.html', {'form': form})
+
+
+def get_summoner_info(name, region):
+    url = "https://{region}.api.riotgames.com/lol/summoner/v3/summoners/by-name/{name}".format(region=region, name=name)
+    headers = {'X-Riot-Token': settings.RIOT_API_KEY}
+    r = requests.get(url, headers=headers)
+    json = r.json()
+
+    return json
+
+
+def get_live_match(summonerid, region):
+    url = "https://{region}.api.riotgames.com/lol/spectator/v3/active-games/by-summoner/{summoner}".format(region=region, summoner=summonerid)
+    headers = {'X-Riot-Token': settings.RIOT_API_KEY}
+    r = requests.get(url, headers=headers)
+    json = r.json()
+    print('getlivematch')
+
+    return json
+
+
+def live_match(request):
+
+    if request.method == "POST":
+        form = submit_summoner_info(request.POST)
+
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            region = form.cleaned_data['region']
+            summoner = get_summoner_info(name, region)
+            print(name)
+            print(summoner['id'])
+            if summoner:
+                # get match data
+                match_data = get_live_match(summoner['id'], region)
+                match = LiveMatchSerializer(data=match_data)
+
+                if match.is_valid():
+                    test = match.save()
+                    print('data saved')
+                    print(test.gameMode)
+                    #return render(request, 'live_match_details.html', {'match': match})
+                # get all champions/summoners
+
+                # get summoner stats
+
+                # get summoner masteries
+
+    else:
+        form = submit_summoner_info()
+
+    return render(request, 'live_match.html', {'form': form})
 
