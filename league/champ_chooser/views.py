@@ -101,18 +101,18 @@ def live_match(request):
             name = form.cleaned_data['name']
             region = form.cleaned_data['region']
             summoner = get_summoner_info(name, region)
-            print(name)
             print(summoner['id'])
+            print(summoner['name'])
             if summoner:
                 # get match data
                 match_data = get_live_match(summoner['id'], region)
-                match = LiveMatchSerializer(data=match_data)
+                match_serialized = LiveMatchSerializer(data=match_data)
 
-                if match.is_valid():
-                    test = match.save()
-                    print('data saved')
-                    print(test.gameMode)
-                    #return render(request, 'live_match_details.html', {'match': match})
+                if match_serialized.is_valid():
+                    match = match_serialized.save()
+                    return render(request, 'live_match_details.html', {'match': match})
+                else:
+                    print("invalid data")
                 # get all champions/summoners
 
                 # get summoner stats
