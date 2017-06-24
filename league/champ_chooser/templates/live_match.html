@@ -7,7 +7,7 @@
 <form class="form-inline" id="match_search_form" method="POST" action="/live/">
     {% csrf_token %}
     {% bootstrap_form form layout="inline" %}
-    {% buttons submit='Search' layout='inline' %}{% endbuttons %}
+    {% bootstrap_button "" button_type="submit" icon="search" button_class="btn-primary" %}
 </form>
 {% endblock %}
 
