@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
-
+{% load bootstrap3 %}
 {% block content %}
 
 <h3>LIVE MATCH</h3>
-    <form action="/live/" method="POST">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Save"/>
-    </form>
 
+<form class="form-inline" id="match_search_form" method="POST" action="/live/">
+    {% csrf_token %}
+    {% bootstrap_form form layout="inline" %}
+    {% buttons submit='Search' layout='inline' %}{% endbuttons %}
+</form>
 {% endblock %}
+
+
+

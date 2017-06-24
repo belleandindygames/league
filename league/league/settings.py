@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'champ_chooser',
     'rest_framework',
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [
