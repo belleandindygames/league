@@ -58,9 +58,11 @@ class GameParticipantSerializer(serializers.Serializer):
     masteries = MasterySerialzier(many=True)
     spell1Id = serializers.IntegerField()
     summonerId = serializers.IntegerField()
+    spell2 = '700'
 
     def create(self, validated_data):
-        return GameParticipant
+        gp = GameParticipant(**validated_data)
+        return gp
 
 
 class LiveMatchSerializer(serializers.Serializer):
@@ -122,6 +124,8 @@ class GameParticipant(object):
         self.masteries = materies
         self.spell1Id = spell1Id
         self.summonerId = summonerId
+        self._spell1 = None
+        self._spell2 = None
 
 
 class Rune(object):

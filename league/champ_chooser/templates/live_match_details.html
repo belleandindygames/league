@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load timetags %}
+{% load spellTags %}
 
 {% block content %}
     <div class="panel panel-default">
@@ -15,7 +16,9 @@
                             <div class="media">
                               <div class="media-left">
                                 <a href="#">
-                                  <img class="media-object" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/profileicon/{{ participant.profileIconId }}.png" alt="Summoner Icon">
+                                  <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/profileicon/{{ participant.profileIconId }}.png" alt="Summoner Icon" width="64" height="64">
+                                    <span>Spell 2: {{ participant.spell2Id|sum_spell_name }}</span>
+                                    <span>Spell 1: {{ participant.spell1 }}</span>
                                 </a>
                               </div>
                               <div class="media-body">
@@ -34,7 +37,7 @@
                             <div class="media">
                               <div class="media-left">
                                 <a href="#">
-                                  <img class="media-object" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/profileicon/{{ participant.profileIconId }}.png" alt="Summoner Icon">
+                                  <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/profileicon/{{ participant.profileIconId }}.png" alt="Summoner Icon" width="64" height="64">
                                 </a>
                               </div>
                               <div class="media-body">

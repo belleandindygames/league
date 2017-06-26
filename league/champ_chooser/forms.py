@@ -1,18 +1,18 @@
 from django import forms
 
 REGIONS = [
-    ('NA1','NA'),
-    ('EUW1','EUW'),
-    ('EUN1','EUN'),
+    ('NA','NA'),
+    ('EUW','EUW'),
+    ('EUN','EUN'),
     ('KR','KR'),
     ('RU','RUS'),
-    ('BR1','BR'),
-    ('JP1','JP'),
-    ('LA1','LAN'),
-    ('LA2','LAS'),
-    ('TR1','TUR'),
-    ('OC1','OCE'),
-    ('PBE1','PBE')
+    ('BR','BR'),
+    ('JP','JP'),
+    ('LAN','LAN'),
+    ('LAS','LAS'),
+    ('TUR','TUR'),
+    ('OCE','OCE'),
+    ('PBE','PBE')
 ]
 
 class submit_summoner_info(forms.Form):
