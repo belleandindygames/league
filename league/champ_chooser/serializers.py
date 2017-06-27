@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Summoner_V3
+from .models import Summoner_V3, SummonerSpell
 
 
 class Summoner_V3_Serializer(serializers.ModelSerializer):
@@ -140,3 +140,13 @@ class Mastery(object):
         self.rank = rank
 
 
+###################
+# Summoner Spells #
+###################
+
+class SummonerSpellSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SummonerSpell
+
+        fields = '__all__'

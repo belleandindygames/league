@@ -14,3 +14,10 @@ class Summoner_V3(models.Model):
     accountId = models.IntegerField(default=0)
     region = models.CharField(max_length=5, default='NA1')
 
+
+class SummonerSpell(models.Model):
+    id = models.IntegerField(primary_key=True)
+    summonerLevel = models.IntegerField(default=None)
+    name = models.CharField(max_length=50, default=None)
+    key = models.CharField(max_length=60, default=None)
+    description = models.CharField(max_length=500, default=None)

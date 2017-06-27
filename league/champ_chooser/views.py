@@ -11,7 +11,7 @@ from .serializers import Summoner_V3_Serializer, LiveMatchSerializer
 from .models import Summoner_V3
 
 from .data import platform
-from .API import get_summoner_info, get_live_match, get_summoner_spell_info
+from .API import get_summoner_info, get_live_match, get_summoner_spell_info, update_summoner_spell_info
 
 # Cass
 
@@ -122,6 +122,6 @@ def live_match(request):
 
     else:
         form = submit_summoner_info()
-
+    update_summoner_spell_info()
     return render(request, 'live_match.html', {'form': form})
 
