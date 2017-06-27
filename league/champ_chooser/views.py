@@ -24,6 +24,7 @@ from datetime import datetime
 # Create your views here.
 
 
+
 def get_summoner_v3(request):
 
     if request.method == "POST":
@@ -83,7 +84,9 @@ def get_summoner_v3(request):
     return render(request, 'index.html', {'form': form})
 
 
-
+def summoner_wrapper(name, region):
+    stripped_name = name.replace(" ", "")
+    return Summoner(name=stripped_name, region=region)
 
 
 def live_match(request):
@@ -95,7 +98,7 @@ def live_match(request):
             name = form.cleaned_data['name']
             region = form.cleaned_data['region']
             print(platform(region))
-            summoner = Summoner(name=name, region=region)
+            summoner = summoner_wrapper(name=name, region=region)
 
             if summoner:
                 # get match data
@@ -122,6 +125,6 @@ def live_match(request):
 
     else:
         form = submit_summoner_info()
-    update_summoner_spell_info()
+
     return render(request, 'live_match.html', {'form': form})
 
