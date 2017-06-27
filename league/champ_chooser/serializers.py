@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Summoner_V3
+from .models import Summoner_V3, SummonerSpell
 
 
 class Summoner_V3_Serializer(serializers.ModelSerializer):
@@ -58,9 +58,11 @@ class GameParticipantSerializer(serializers.Serializer):
     masteries = MasterySerialzier(many=True)
     spell1Id = serializers.IntegerField()
     summonerId = serializers.IntegerField()
+    spell2 = '700'
 
     def create(self, validated_data):
-        return GameParticipant
+        gp = GameParticipant(**validated_data)
+        return gp
 
 
 class LiveMatchSerializer(serializers.Serializer):
@@ -122,6 +124,8 @@ class GameParticipant(object):
         self.masteries = materies
         self.spell1Id = spell1Id
         self.summonerId = summonerId
+        self._spell1 = None
+        self._spell2 = None
 
 
 class Rune(object):
@@ -136,3 +140,13 @@ class Mastery(object):
         self.rank = rank
 
 
+###################
+# Summoner Spells #
+###################
+
+class SummonerSpellSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = SummonerSpell
+
+        fields = '__all__'

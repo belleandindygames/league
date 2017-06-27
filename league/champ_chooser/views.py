@@ -7,11 +7,22 @@ from django.shortcuts import get_object_or_404
 from django.conf import settings
 from django.shortcuts import render
 from .forms import submit_summoner_info
-from serializers import Summoner_V3_Serializer, LiveMatchSerializer
-from models import Summoner_V3
+from .serializers import Summoner_V3_Serializer, LiveMatchSerializer
+from .models import Summoner_V3
+
+from .data import platform
+from .API import get_summoner_info, get_live_match, get_summoner_spell_info, update_summoner_spell_info
+
+# Cass
+
+import cassiopeia as cass
+from cassiopeia.core import Summoner
+
+
 from datetime import datetime
 
 # Create your views here.
+
 
 
 def get_summoner_v3(request):
@@ -73,23 +84,9 @@ def get_summoner_v3(request):
     return render(request, 'index.html', {'form': form})
 
 
-def get_summoner_info(name, region):
-    url = "https://{region}.api.riotgames.com/lol/summoner/v3/summoners/by-name/{name}".format(region=region, name=name)
-    headers = {'X-Riot-Token': settings.RIOT_API_KEY}
-    r = requests.get(url, headers=headers)
-    json = r.json()
-
-    return json
-
-
-def get_live_match(summonerid, region):
-    url = "https://{region}.api.riotgames.com/lol/spectator/v3/active-games/by-summoner/{summoner}".format(region=region, summoner=summonerid)
-    headers = {'X-Riot-Token': settings.RIOT_API_KEY}
-    r = requests.get(url, headers=headers)
-    json = r.json()
-    print('getlivematch')
-
-    return json
+def summoner_wrapper(name, region):
+    stripped_name = name.replace(" ", "")
+    return Summoner(name=stripped_name, region=region)
 
 
 def live_match(request):
@@ -100,16 +97,16 @@ def live_match(request):
         if form.is_valid():
             name = form.cleaned_data['name']
             region = form.cleaned_data['region']
-            summoner = get_summoner_info(name, region)
-            print(summoner['id'])
-            print(summoner['name'])
+            summoner = summoner_wrapper(name=name, region=region)
+
             if summoner:
                 # get match data
-                match_data = get_live_match(summoner['id'], region)
+                match_data = get_live_match(summoner.id, platform(region))
                 match_serialized = LiveMatchSerializer(data=match_data)
 
                 if match_serialized.is_valid():
                     match = match_serialized.save()
+
                     return render(request, 'live_match_details.html', {'match': match})
                 else:
                     print("invalid data")
