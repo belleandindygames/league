@@ -1,15 +1,16 @@
 from django import template
 from ..API import get_summoner_spell_info
+from ..models import SummonerSpell
+from django.shortcuts import get_object_or_404
 
 register = template.Library()
 
 
 def sum_spell_name(spell_id):
-    spell = spell_id
     try:
-        spell = get_summoner_spell_info('NA1', spell, 'en_US')
+        spell = get_object_or_404(SummonerSpell, id=spell_id)
     except ValueError:
         return None
-    return spell['name']
+    return spell.key
 
 register.filter(sum_spell_name)

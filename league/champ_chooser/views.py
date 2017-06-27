@@ -97,7 +97,6 @@ def live_match(request):
         if form.is_valid():
             name = form.cleaned_data['name']
             region = form.cleaned_data['region']
-            print(platform(region))
             summoner = summoner_wrapper(name=name, region=region)
 
             if summoner:
@@ -107,12 +106,6 @@ def live_match(request):
 
                 if match_serialized.is_valid():
                     match = match_serialized.save()
-                    print(match.participants[0]['summonerName'])
-                    print(match.participants[0])
-                    spell = get_summoner_spell_info(platform(region), match.participants[0]['spell2Id'], 'en_US')
-                    print(spell['name'])
-                   # for participant in match.participants:
-                    #    print(participant.spell1)
 
                     return render(request, 'live_match_details.html', {'match': match})
                 else:
