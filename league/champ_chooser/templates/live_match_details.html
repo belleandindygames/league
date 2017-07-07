@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load timetags %}
-{% load spellTags %}
+{% load nameTags %}
 
 {% block content %}
   <div class="panel panel-default">
@@ -16,7 +16,7 @@
                 <div class="media">
                   <div class="media-left">
                     <a href="#">
-                      <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/profileicon/{{ participant.profileIconId }}.png" alt="Summoner Icon" width="64" height="64">
+                      <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ participant.championId|champ_name }}.png" alt="Summoner Icon" width="64" height="64">
                       <div>
                         <img class="media-object img-rounded pull-left" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell1Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="32" height="32">
                         <img class="media-object img-rounded pull-right" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell2Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="32" height="32">
@@ -39,7 +39,11 @@
                 <div class="media">
                   <div class="media-left">
                     <a href="#">
-                      <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/profileicon/{{ participant.profileIconId }}.png" alt="Summoner Icon" width="64" height="64">
+                      <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ participant.championId|champ_name }}.png" alt="Summoner Icon" width="64" height="64">
+                      <div>
+                        <img class="media-object img-rounded pull-left" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell1Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="32" height="32">
+                        <img class="media-object img-rounded pull-right" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell2Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="32" height="32">
+                      </div>
                     </a>
                   </div>
                   <div class="media-body">
