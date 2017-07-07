@@ -24,7 +24,6 @@ from datetime import datetime
 # Create your views here.
 
 
-
 def get_summoner_v3(request):
 
     if request.method == "POST":
@@ -62,7 +61,7 @@ def get_summoner_v3(request):
 
             else:
                 # lookup name in db before doing get request if found render oage with correct data
-                url = 'https://' + region +'.api.riotgames.com/lol/summoner/v3/summoners/by-name/' + name
+                url = 'https://' + region + '.api.riotgames.com/lol/summoner/v3/summoners/by-name/' + name
                 headers = { 'X-Riot-Token': settings.RIOT_API_KEY }
                 r = requests.get(url, headers=headers)
                 json = r.json()
