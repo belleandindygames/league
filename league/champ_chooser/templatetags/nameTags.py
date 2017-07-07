@@ -24,7 +24,7 @@ def champ_name(champ_id):
     except ValueError:
         return None
     print(champ.name)
-    return CHAMP_NAMES[champ.name]
+    return champ.key
 
 register.filter(champ_name)
 
