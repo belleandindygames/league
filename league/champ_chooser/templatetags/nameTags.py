@@ -47,9 +47,19 @@ register.filter(team_name)
 
 
 @register.filter
-def banned_champ(champions, index):
+def banned_champ_blue(champions, index):
     try:
         cid = champions[index]['championId']
+        champ = Champion(id=cid)
+    except ValueError:
+        return None
+    return champ.key
+
+
+@register.filter
+def banned_champ_red(champions, index):
+    try:
+        cid = champions[index+5]['championId']
         champ = Champion(id=cid)
     except ValueError:
         return None

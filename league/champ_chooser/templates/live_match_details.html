@@ -25,7 +25,7 @@
                 {% for participant in match.participants|slice:":5" %}
                 <tr>
                   <td>
-                       <div>
+                    <div>
                       <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ participant.championId|champ_name }}.png" alt="Summoner Icon" width="32" height="32">
                       <div>
                       <img class="media-object img-rounded pull-left" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell1Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="16" height="16">
@@ -38,8 +38,7 @@
                   <td></td>
                   <td></td>
                   <td>
-                    {{ match.bannedChampions|banned_champ:forloop.counter0 }}
-                    <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ match.bannedChampions|banned_champ:forloop.counter0 }}.png" alt="Summoner Icon" width="24" height="24">
+                    <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ match.bannedChampions|banned_champ_blue:forloop.counter0 }}.png" alt="Summoner Icon" width="24" height="24">
                   </td>
                 </tr>
                 {% endfor %}
@@ -68,8 +67,7 @@
                   <td></td>
                   <td></td>
                   <td>
-                    {{ match.bannedChampions|banned_champ:forloop.counter0 }}
-                    <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ match.bannedChampions|banned_champ:forloop.counter0 }}.png" alt="Summoner Icon" width="24" height="24">
+                    <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ match.bannedChampions|banned_champ_red:forloop.counter0 }}.png" alt="Summoner Icon" width="24" height="24">
                   </td>
                 </tr>
                 {% endfor %}
