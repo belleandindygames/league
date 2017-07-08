@@ -3,61 +3,80 @@
 {% load nameTags %}
 
 {% block content %}
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h3>{{ match.gameMode }} {{ match.gameStartTime|epoch_to_date }}</h3>
-    </div>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-md-6">
-          {% for participant in match.participants|slice:":5" %}
+        <div class="col-md-12">
             <div class="panel panel-default">
-              <div class="panel-body">
-                <div class="media">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ participant.championId|champ_name }}.png" alt="Summoner Icon" width="64" height="64">
+              <!-- Default panel contents -->
+              <div class="panel-heading">{{ match.gameType }} {{ match.gameStartTime|epoch_to_date }}</div>
+              <!--<div class="panel-body">
+                <p>optional</p>
+              </div>-->
+
+              <!-- Table -->
+              <table class="table">
+                <!-- Blue Team -->
+                <tr class="Blue-team">
+                  <th>Champion</th>
+                  <th>Summoner</th>
+                  <th>Other</th>
+                  <th>Other</th>
+                  <th>Other</th>
+                  <th>Banned</th>
+                </tr>
+                {% for participant in match.participants|slice:":5" %}
+                <tr>
+                  <td>
+                       <div>
+                      <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ participant.championId|champ_name }}.png" alt="Summoner Icon" width="32" height="32">
                       <div>
-                        <img class="media-object img-rounded pull-left" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell1Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="32" height="32">
-                        <img class="media-object img-rounded pull-right" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell2Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="32" height="32">
+                      <img class="media-object img-rounded pull-left" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell1Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="16" height="16">
+                      <img class="media-object img-rounded pull-left" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell2Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="16" height="16">
                       </div>
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">{{ participant.summonerName }}</h4>
-                    <span>Team Id: {{ participant.teamId }}</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          {% endfor %}
-        </div>
-        <div class="col-md-6">
-          {% for participant in match.participants|slice:"5:" %}
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <div class="media">
-                  <div class="media-left">
-                    <a href="#">
-                      <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ participant.championId|champ_name }}.png" alt="Summoner Icon" width="64" height="64">
+                    </div>
+                  </td>
+                  <td>{{ participant.summonerName }}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    {{ match.bannedChampions|banned_champ:forloop.counter0 }}
+                    <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ match.bannedChampions|banned_champ:forloop.counter0 }}.png" alt="Summoner Icon" width="24" height="24">
+                  </td>
+                </tr>
+                {% endfor %}
+                <!-- Red Team -->
+                <tr class="Red-team">
+                  <th>Champion</th>
+                  <th>Summoner</th>
+                  <th>Other</th>
+                  <th>Other</th>
+                  <th>Other</th>
+                  <th>Banned</th>
+                </tr>
+                {% for participant in match.participants|slice:"5:" %}
+                <tr>
+                  <td>
+                    <div>
+                      <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ participant.championId|champ_name }}.png" alt="Summoner Icon" width="32" height="32">
                       <div>
-                        <img class="media-object img-rounded pull-left" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell1Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="32" height="32">
-                        <img class="media-object img-rounded pull-right" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell2Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="32" height="32">
+                      <img class="media-object img-rounded pull-left" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell1Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="16" height="16">
+                      <img class="media-object img-rounded pull-left" src="http://ddragon.leagueoflegends.com/cdn/6.24.1/img/spell/{{ participant.spell2Id|sum_spell_name }}.png" alt="Summoner Spell Name Place Holder" width="16" height="16">
                       </div>
-                    </a>
-                  </div>
-                  <div class="media-body">
-                    <h4 class="media-heading">{{ participant.summonerName }}</h4>
-                    <span>Team Id: {{ participant.teamId }}</span>
-                  </div>
-                </div>
-              </div>
+                    </div>
+                  </td>
+                  <td>{{ participant.summonerName }}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    {{ match.bannedChampions|banned_champ:forloop.counter0 }}
+                    <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ match.bannedChampions|banned_champ:forloop.counter0 }}.png" alt="Summoner Icon" width="24" height="24">
+                  </td>
+                </tr>
+                {% endfor %}
+              </table>
             </div>
-          {% endfor %}
+
         </div>
-      </div>
-    </div>
-  </div>
 {% endblock %}
 
 

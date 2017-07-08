@@ -20,7 +20,7 @@ from champ_chooser.views import get_summoner_v3, live_match
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^summoner/', get_summoner_v3),
-    url(r'^live/', live_match),
-    url(r'^summonerprofile/',get_summoner_v3),
+    url(r'^summoner/', get_summoner_v3, name='summoner_lookup'),
+    url(r'^live/', live_match, name='live_match'),
+    url(r'^summonerprofile/', get_summoner_v3, name='summoner_profile'),
 ]

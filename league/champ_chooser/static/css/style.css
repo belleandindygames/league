@@ -1,0 +1,18 @@
+.top-pad {
+    padding-top: 50px;
+}
+
+.Red-team {
+    background-color: rgb(255,230,230);
+    padding-top: 0px !important;
+    padding-bottom: 0px !important;
+    padding-left: 2px !important;
+}
+
+.Blue-team {
+    background-color: rgb(230,230,255);
+    padding-top: 0px !important;
+    padding-right: 2px !important;
+    padding-bottom: 0px !important;
+}
+

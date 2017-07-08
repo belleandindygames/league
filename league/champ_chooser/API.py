@@ -31,6 +31,7 @@ def get_summoner_spell_info(region, spell, locale):
 
     return json
 
+
 def get_summoner_spells_all(region, locale):
     url = "https://{region}.api.riotgames.com/lol/static-data/v3/summoner-spells?locale={locale}&dataById=false".format(region=region, locale=locale)
     headers = {'X-Riot-Token': settings.RIOT_API_KEY}

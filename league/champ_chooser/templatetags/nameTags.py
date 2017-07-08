@@ -28,6 +28,34 @@ def champ_name(champ_id):
 
 register.filter(champ_name)
 
+
+def team_name(team):
+    try:
+        print(team)
+        teams = {
+            100: 'Blue',
+            200: 'Red'
+        }
+
+        player_team = teams[team]
+    except ValueError:
+        return None
+
+    return player_team
+
+register.filter(team_name)
+
+
+@register.filter
+def banned_champ(champions, index):
+    try:
+        cid = champions[index]['championId']
+        champ = Champion(id=cid)
+    except ValueError:
+        return None
+    return champ.key
+
+'''
 CHAMP_NAMES = {  # For Data Dragon Lookup, Riots naming convention is inconsistent
     "Aatrox": "Aatrox",
     "Alistar": "Alistar",
@@ -166,3 +194,4 @@ CHAMP_NAMES = {  # For Data Dragon Lookup, Riots naming convention is inconsiste
     "Zilean": "Zilean",
     "": ""
 }
+'''
