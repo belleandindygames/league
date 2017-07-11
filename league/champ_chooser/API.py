@@ -41,6 +41,15 @@ def get_summoner_spells_all(region, locale):
     return json
 
 
+def get_summoner_league(region, summoner_id):  # cass version of this not implemented
+    url = "https://{region}.api.riotgames.com/lol/league/v3/positions/by-summoner/{summoner_id}".format(region=region, summoner_id=summoner_id)
+    headers = {'X-Riot-Token': settings.RIOT_API_KEY}
+    r = requests.get(url, headers=headers)
+    json = r.json()
+
+    return json
+
+
 def update_summoner_spell_info():
     data = get_summoner_spells_all('na1', 'en_US')
 

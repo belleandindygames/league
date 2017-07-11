@@ -17,8 +17,8 @@
                 <tr class="Blue-team">
                   <th>Champion</th>
                   <th>Summoner</th>
-                  <th>Other</th>
-                  <th>Other</th>
+                  <th>Win % (recent games)</th>
+                  <th>Record</th>
                   <th>Other</th>
                   <th>Banned</th>
                 </tr>
@@ -34,7 +34,7 @@
                     </div>
                   </td>
                   <td>{{ participant.summonerName }}</td>
-                  <td></td>
+                  <td>{{ participant.summonerId|summoner_record:match }}</td>
                   <td></td>
                   <td></td>
                   <td>
@@ -46,7 +46,7 @@
                 <tr class="Red-team">
                   <th>Champion</th>
                   <th>Summoner</th>
-                  <th>Other</th>
+                  <th>Win %</th>
                   <th>Other</th>
                   <th>Other</th>
                   <th>Banned</th>

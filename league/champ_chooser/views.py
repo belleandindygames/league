@@ -11,12 +11,13 @@ from .serializers import Summoner_V3_Serializer, LiveMatchSerializer
 from .models import Summoner_V3
 
 from .data import platform
-from .API import get_summoner_info, get_live_match, get_summoner_spell_info, update_summoner_spell_info
+from .API import get_summoner_info, get_live_match, get_summoner_spell_info, update_summoner_spell_info, get_summoner_league
 
 # Cass
 
 import cassiopeia as cass
 from cassiopeia.core import Summoner
+
 
 
 from datetime import datetime
@@ -109,7 +110,7 @@ def live_match(request):
                     return render(request, 'live_match_details.html', {'match': match})
                 else:
                     print("invalid data")
-                # get all champions/summoners
+                # get all champions/summoners --DONE
 
                 # get summoner stats
 
@@ -119,4 +120,16 @@ def live_match(request):
         form = submit_summoner_info()
 
     return render(request, 'live_match.html', {'form': form})
+
+
+def test_something(request):
+
+    summoner = 'Snowcola'
+    region = 'NA'
+    summoner_id = Summoner(name=summoner, region=region)
+
+    result = get_summoner_league(region=platform(region), summoner_id=summoner_id.id)
+    return render(request, 'test.html',  {'result': result})
+
+
 

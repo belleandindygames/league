@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load bootstrap3 %}
+{% block content %}
+
+<h3>Testing...</h3>
+
+<h3>
+  {% for league in result %}
+    {% if league.queueType == 'RANKED_SOLO_5x5' %}
+      <div>{{ league.queueType }}</div>
+      <div>{{ league.wins }}</div>
+      <div>{{ league.losses }}</div>
+      {% if league.hotStreak %}
+        <span class="label label-danger">HOT STREAK</span>
+      {% endif %}
+
+    {% endif %}
+  {% endfor %}
+
+
+</h3>
+{% endblock %}
+
+
+

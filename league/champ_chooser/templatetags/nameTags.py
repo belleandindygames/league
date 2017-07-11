@@ -1,12 +1,14 @@
 from django import template
-from ..API import get_summoner_spell_info
+from ..API import get_summoner_spell_info, get_summoner_league
 from ..models import SummonerSpell
 from django.shortcuts import get_object_or_404
 from cassiopeia.core import Champion
+from ..data import game_q_config_id_to_name as game_id_to_name
 
 register = template.Library()
 
 
+@register.filter
 def sum_spell_name(spell_id):
     try:
         spell = get_object_or_404(SummonerSpell, id=spell_id)
@@ -14,24 +16,22 @@ def sum_spell_name(spell_id):
         return None
     return spell.key
 
-register.filter(sum_spell_name)
 
-
+@register.filter
 def champ_name(champ_id):
     try:
-        print(champ_id)
+
         champ = Champion(id=champ_id)
     except ValueError:
         return None
     print(champ.name)
     return champ.key
 
-register.filter(champ_name)
 
-
+@register.filter
 def team_name(team):
     try:
-        print(team)
+
         teams = {
             100: 'Blue',
             200: 'Red'
@@ -43,27 +43,54 @@ def team_name(team):
 
     return player_team
 
-register.filter(team_name)
-
 
 @register.filter
 def banned_champ_blue(champions, index):
-    try:
-        cid = champions[index]['championId']
-        champ = Champion(id=cid)
-    except ValueError:
+    cid = champions[index]['championId']
+    if cid < 0:
         return None
-    return champ.key
+    else:
+        champ = Champion(id=cid)
+        return champ.key
 
 
 @register.filter
 def banned_champ_red(champions, index):
-    try:
-        cid = champions[index+5]['championId']
+    cid = champions[index+5]['championId']
+    if cid < 0:
+        return None
+    else:
         champ = Champion(id=cid)
+        return champ.key
+
+
+@register.filter
+def summoner_record(summoner_id, match):
+    total = 0
+    win_percent = 0
+
+    try:
+        region = match.platformId
+
+        queue_type = game_id_to_name(match.gameQueueConfigId, True)
+        leagues = get_summoner_league(region=region, summoner_id=summoner_id)
+        for league in leagues:
+            print(league['queueType'], ' something ', queue_type)
+
+            if league['queueType'] == queue_type:
+                wins = league['wins']
+                losses = league['losses']
+                win_percent = wins/(wins + losses)
+                print('records')
+                print(wins)
+                print(losses)
+                print(win_percent)
+
+        record = "{win_percent} ({total} played)".format(win_percent=win_percent, total=total)
+
     except ValueError:
         return None
-    return champ.key
+    return record
 
 '''
 CHAMP_NAMES = {  # For Data Dragon Lookup, Riots naming convention is inconsistent
