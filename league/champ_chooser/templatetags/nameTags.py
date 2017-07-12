@@ -47,20 +47,24 @@ def team_name(team):
 @register.filter
 def banned_champ_blue(champions, index):
     cid = champions[index]['championId']
+    print('champ id is: {}'.format(cid))
     if cid < 0:
         return None
     else:
         champ = Champion(id=cid)
+        print(champ.key)
         return champ.key
 
 
 @register.filter
 def banned_champ_red(champions, index):
     cid = champions[index+5]['championId']
+    print('champ id is: {}'.format(cid))
     if cid < 0:
         return None
     else:
         champ = Champion(id=cid)
+        print(champ.key)
         return champ.key
 
 

@@ -38,7 +38,11 @@
                   <td></td>
                   <td></td>
                   <td>
-                    <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ match.bannedChampions|banned_champ_blue:forloop.counter0 }}.png" alt="Summoner Icon" width="24" height="24">
+                    {% with match.bannedChampions|banned_champ_blue:forloop.counter0 as champ_blue  %}
+                    {% if champ_blue != None %}
+                    <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ champ_blue }}.png" alt="Summoner Icon" width="24" height="24">
+                    {% endif %}
+                    {% endwith %}
                   </td>
                 </tr>
                 {% endfor %}
@@ -67,7 +71,11 @@
                   <td></td>
                   <td></td>
                   <td>
-                    <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ match.bannedChampions|banned_champ_red:forloop.counter0 }}.png" alt="Summoner Icon" width="24" height="24">
+                    {% with match.bannedChampions|banned_champ_red:forloop.counter0 as champ_red  %}
+                    {% if champ_red != None %}
+                    <img class="media-object img-rounded" src="http://ddragon.leagueoflegends.com/cdn/7.12.1/img/champion/{{ champ_red }}.png" alt="Summoner Icon" width="24" height="24">
+                    {% endif %}
+                    {% endwith %}
                   </td>
                 </tr>
                 {% endfor %}
