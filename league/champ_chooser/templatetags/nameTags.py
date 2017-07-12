@@ -66,6 +66,7 @@ def banned_champ_red(champions, index):
 
 @register.filter
 def summoner_record(summoner_id, match):
+    print('Getting league data for {summoner_id}'.format(summoner_id=summoner_id))
     total = 0
     win_percent = 0
 
@@ -75,18 +76,14 @@ def summoner_record(summoner_id, match):
         queue_type = game_id_to_name(match.gameQueueConfigId, True)
         leagues = get_summoner_league(region=region, summoner_id=summoner_id)
         for league in leagues:
-            print(league['queueType'], ' something ', queue_type)
 
             if league['queueType'] == queue_type:
                 wins = league['wins']
                 losses = league['losses']
-                win_percent = wins/(wins + losses)
-                print('records')
-                print(wins)
-                print(losses)
-                print(win_percent)
+                total = wins + losses
+                win_percent = wins/(total)
 
-        record = "{win_percent} ({total} played)".format(win_percent=win_percent, total=total)
+        record = "{:.0%} ({total} played)".format(win_percent, total=total)
 
     except ValueError:
         return None
