@@ -19,7 +19,6 @@ import cassiopeia as cass
 from cassiopeia.core import Summoner
 
 
-
 from datetime import datetime
 
 # Create your views here.
@@ -106,8 +105,9 @@ def live_match(request):
 
                 if match_serialized.is_valid():
                     match = match_serialized.save()
-
-                    return render(request, 'live_match_details.html', {'match': match})
+                    patch = settings.CURRENT_PATCH
+                    print(patch)
+                    return render(request, 'live_match_details.html', {'match': match, 'patch': patch})
                 else:
                     print("invalid data")
                 # get all champions/summoners --DONE
@@ -124,11 +124,7 @@ def live_match(request):
 
 def test_something(request):
 
-    summoner = 'Snowcola'
-    region = 'NA'
-    summoner_id = Summoner(name=summoner, region=region)
-
-    result = get_summoner_league(region=platform(region), summoner_id=summoner_id.id)
+    result = 0
     return render(request, 'test.html',  {'result': result})
 
 
