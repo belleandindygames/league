@@ -2,6 +2,7 @@
 import requests
 from django.conf import settings
 from .serializers import SummonerSpellSerializer
+import regex as re
 
 
 def get_summoner_info(name, region):
@@ -57,4 +58,16 @@ def update_summoner_spell_info():
         s = SummonerSpellSerializer(data=data['data'][d])
         if s.is_valid():
             s.save()
+
+
+def validate_summoner_name(name):
+
+    name_regex = re.compile(u'^[0-9\\p{L} _\\.]+$')
+    validated_name = re.search(name_regex, name)
+
+    if validated_name:
+        return validated_name[0]
+    else:
+        return None
+
 

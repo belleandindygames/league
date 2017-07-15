@@ -1,5 +1,6 @@
 def platform(region):
     _platform = 'NA1'
+    _region = region.upper()
 
     platforms = {
         'NA': 'NA1',
@@ -16,7 +17,7 @@ def platform(region):
         'PBE': 'PBE1'
     }
 
-    _platform = platforms[region]
+    _platform = platforms[_region]
 
     return _platform
 
@@ -126,7 +127,5 @@ def game_q_config_id_to_name(q_id, live):
             600: 'ASSASSINATE_5x5',
             610: 'DARKSTAR_3x3'
         }
-
-
 
     return id_to_name[q_id]

@@ -3,23 +3,22 @@ from __future__ import unicode_literals
 
 import requests
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.conf import settings
 from django.shortcuts import render
 from .forms import submit_summoner_info
 from .serializers import Summoner_V3_Serializer, LiveMatchSerializer
 from .models import Summoner_V3
 
+
 from .data import platform
-from .API import get_summoner_info, get_live_match, get_summoner_spell_info, update_summoner_spell_info, get_summoner_league
+from .API import get_live_match, validate_summoner_name
 
 # Cass
 
 import cassiopeia as cass
 from cassiopeia.core import Summoner
 
-
-from datetime import datetime
 
 # Create your views here.
 
@@ -36,22 +35,23 @@ def get_summoner_v3(request):
 
             if summoner_exists:
                 summoner = get_object_or_404(Summoner_V3, name__iexact=name)
-                if summoner.region == region:
+                if summoner.region == platform(region):
 
                     return render(request, 'summoner_details.html', {'summoner': summoner})
 
                 else:
                     # lookup name in db before doing get request if found render oage with correct data
-                    url = 'https://' + region + '.api.riotgames.com/lol/summoner/v3/summoners/by-name/' + name
+                    url = 'https://' + platform(region) + '.api.riotgames.com/lol/summoner/v3/summoners/by-name/' + name
                     headers = {'X-Riot-Token': settings.RIOT_API_KEY}
                     r = requests.get(url, headers=headers)
                     json = r.json()
+                    print('JSON RESPONSE')
                     print(json.id)
                     serializer = Summoner_V3_Serializer(data=json)
 
                     if serializer.is_valid():
                         summoner = serializer.save()
-                        summoner.region = region
+                        summoner.region = platform(region)
                         summoner.save()
 
                         return render(request, 'summoner_details.html', {'summoner': summoner})
@@ -61,7 +61,7 @@ def get_summoner_v3(request):
 
             else:
                 # lookup name in db before doing get request if found render oage with correct data
-                url = 'https://' + region + '.api.riotgames.com/lol/summoner/v3/summoners/by-name/' + name
+                url = 'https://' + platform(region) + '.api.riotgames.com/lol/summoner/v3/summoners/by-name/' + name
                 headers = { 'X-Riot-Token': settings.RIOT_API_KEY }
                 r = requests.get(url, headers=headers)
                 json = r.json()
@@ -69,7 +69,7 @@ def get_summoner_v3(request):
                 print(json)
                 if serializer.is_valid():
                     summoner = serializer.save()
-                    summoner.region = region
+                    summoner.region = platform(region)
                     summoner.save()
 
                     return render(request, 'summoner_details.html', {'summoner': summoner})
@@ -96,30 +96,47 @@ def live_match(request):
         if form.is_valid():
             name = form.cleaned_data['name']
             region = form.cleaned_data['region']
-            summoner = summoner_wrapper(name=name, region=region)
 
+            summoner = validate_summoner_name(name)   # summoner_wrapper(name=name, region=region)
+            summoner = summoner.replace(" ", "")
             if summoner:
                 # get match data
-                match_data = get_live_match(summoner.id, platform(region))
-                match_serialized = LiveMatchSerializer(data=match_data)
-
-                if match_serialized.is_valid():
-                    match = match_serialized.save()
-                    patch = settings.CURRENT_PATCH
-                    print(patch)
-                    return render(request, 'live_match_details.html', {'match': match, 'patch': patch})
-                else:
-                    print("invalid data")
-                # get all champions/summoners --DONE
-
-                # get summoner stats
-
-                # get summoner masteries
-
+                print('summoner is valid')
+                region = region.lower()
+                return redirect('{}/{}/'.format(region, summoner))
     else:
         form = submit_summoner_info()
 
     return render(request, 'live_match.html', {'form': form})
+
+
+def live_match_detail(request, region, summoner_name):
+
+    region = region.upper()
+    summoner = summoner_wrapper(name=summoner_name, region=region)
+
+    if summoner:
+
+        match_data = get_live_match(summoner.id, platform(region))
+        match_serialized = LiveMatchSerializer(data=match_data)
+
+        if match_serialized.is_valid():
+            match = match_serialized.save()
+            patch = settings.CURRENT_PATCH
+            print(patch)
+            return render(request, 'live_match_details.html', {'match': match, 'patch': patch})
+        else:
+            print("Summoner not in game")
+            # get all champions/summoners --DONE
+
+            # get summoner stats
+
+            # get summoner masteries
+            return render(request, 'summoner_not_in_game.html')
+    else:
+        print('Summoner does not exist')
+        # replace this with summoner does not exist page
+        return render(request, 'summoner_noexist.html', {'name': summoner, 'region': region})
 
 
 def test_something(request):

@@ -16,12 +16,13 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 
-from champ_chooser.views import get_summoner_v3, live_match, test_something
+from champ_chooser.views import get_summoner_v3, live_match, test_something, live_match_detail
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^summoner/', get_summoner_v3, name='summoner_lookup'),
-    url(r'^live/', live_match, name='live_match'),
+    url(r'^live/$', live_match, name='live_match'),
+    url(r'^live/([a-zA-Z0-9]+)/(.+)/$', live_match_detail, name='live-match-detail'),
     url(r'^summonerprofile/', get_summoner_v3, name='summoner_profile'),
     url(r'test/', test_something, name='test'),
 ]
