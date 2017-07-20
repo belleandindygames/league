@@ -1,4 +1,4 @@
-# <insert clever name here>
+# \<insert clever name here\>
 A league of legends data analysis and stats webapp
 
 ## Python
