@@ -88,6 +88,11 @@ def summoner_wrapper(name, region):
     return Summoner(name=stripped_name, region=region)
 
 
+##############
+# LIVE MATCH #
+##############
+
+
 def live_match(request):
 
     if request.method == "POST":
@@ -116,7 +121,8 @@ def live_match_detail(request, region, summoner_name):
     summoner = summoner_wrapper(name=summoner_name, region=region)
 
     if summoner:
-
+        # TODO: rewrite to prep data for template and don't use of custom  tags
+        
         match_data = get_live_match(summoner.id, platform(region))
         match_serialized = LiveMatchSerializer(data=match_data)
 
@@ -137,6 +143,11 @@ def live_match_detail(request, region, summoner_name):
         print('Summoner does not exist')
         # replace this with summoner does not exist page
         return render(request, 'summoner_noexist.html', {'name': summoner, 'region': region})
+
+
+##############
+#    TEST    #
+##############
 
 
 def test_something(request):
