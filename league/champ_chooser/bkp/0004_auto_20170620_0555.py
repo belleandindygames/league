@@ -9,7 +9,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('champ_chooser', '0003_auto_20170613_0658'),
+        ('.league.champ_chooser', '0003_auto_20170613_0658'),
     ]
 
     operations = [

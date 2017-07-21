@@ -8,7 +8,7 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('champ_chooser', '0001_initial'),
+        ('.league.champ_chooser', '0001_initial'),
     ]
 
     operations = [
