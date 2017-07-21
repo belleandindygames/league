@@ -10,16 +10,19 @@ $ workon <env_name>
 $ pip3 install requirements -r requirements.txt 
 ```
 
-## Web
+## React
 ### Install node.js and web package managment tools
 ```
 $ brew update
 $ brew install node
 $ npm install -g yarn
-$ npm install -g gulp-cli
+$ yarn global add create-react-app
 ```
-### Install project dependencies
+## Run Server
 ```
-$ cd /path/to/project/league/league/static/js
-$ yarn install
+$ ./manage.py runserver
+```
+#### open new terminal tab
+```
+$ cd frontend && yarn start
 ```

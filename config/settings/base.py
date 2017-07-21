@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__))) # depreci
 
 ROOT_DIR = environ.Path(__file__) - 3  # (league/config/settings/base.py - 3 = league/)
 APPS_DIR = ROOT_DIR.path('league')
-print(ROOT_DIR.path(''))
+REACT_APP_DIR = ROOT_DIR.path('frontend')
 # Load operating system environment variables and then prepare to use them
 env = environ.Env()
 
@@ -200,6 +200,7 @@ STATIC_URL = '/static/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
     str(APPS_DIR.path('static')),
+    str(REACT_APP_DIR.path('build/static')),
 ]
 
 # MEDIA CONFIGURATION
