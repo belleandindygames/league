@@ -160,6 +160,7 @@ TEMPLATES = [
         # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-dirs
         'DIRS': [
             str(APPS_DIR.path('templates')),
+            os.path.join(str(REACT_APP_DIR), 'build'),
         ],
         'OPTIONS': {
             # See: https://docs.djangoproject.com/en/dev/ref/settings/#template-debug
@@ -200,7 +201,7 @@ STATIC_URL = '/static/'
 # See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
 STATICFILES_DIRS = [
     str(APPS_DIR.path('static')),
-    str(REACT_APP_DIR.path('build/static')),
+    os.path.join(str(REACT_APP_DIR.path('build')),'static'),
 ]
 
 # MEDIA CONFIGURATION

@@ -1,21 +1,28 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-import requests
+# Std lib imports
+import logging
+import os
 
+# Django imports
 from django.shortcuts import get_object_or_404, redirect
 from django.conf import settings
 from django.shortcuts import render
+from django.http import HttpResponse
+from django.views.generic import View
+
+# App imports
 from .forms import submit_summoner_info
 from .serializers import Summoner_V3_Serializer, LiveMatchSerializer
 from .models import Summoner_V3
-
-
 from .data import platform
 from .API import get_live_match, validate_summoner_name
 
-# Cass
+# 3rd party imports
+import requests
 
+# Cass
 import cassiopeia as cass
 from cassiopeia.core import Summoner
 
@@ -80,7 +87,7 @@ def get_summoner_v3(request):
     else:
         form = submit_summoner_info()
 
-    return render(request, 'index.html', {'form': form})
+    return render(request, 'summoner.html', {'form': form})
 
 
 def summoner_wrapper(name, region):
@@ -156,4 +163,30 @@ def test_something(request):
     return render(request, 'test.html',  {'result': result})
 
 
+##############
+#    TEST    #
+##############
 
+
+class FrontendAppView(View):
+    """
+    Serves react app
+    """
+    def get(self, request):
+        try:
+            with open(os.path.join(str(settings.REACT_APP_DIR), 'build', 'index.html')) as f:
+                print(f.read())
+                html = f.read
+                test = 'test text'
+                #return HttpResponse('WHAT')
+                return render(request, 'index.html', {'test': test} )
+        except FileNotFoundError:
+            logging.exception('App build not found')
+            return HttpResponse(
+            """
+            This URL for prod only, Use http://localhost:3000/ (yarn run start) in development 
+            or (yarn run build) for generate the production bundle.
+            """,
+            status=501,
+        )
+            

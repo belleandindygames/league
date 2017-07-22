@@ -30,7 +30,7 @@ urlpatterns = [
     
 
     # champ_chooser urls
-    url(r'^', include('league.champ_chooser.urls')),
+    url(r'^app/', include('league.champ_chooser.urls')),
 ]
 
 if settings.DEBUG:
