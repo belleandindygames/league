@@ -11,13 +11,18 @@ from django.conf import settings
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View
+from django.core.serializers import serialize
+
+# DRF imports
+from rest_framework.views import APIView
+from rest_framework.response import Response
 
 # App imports
 from .forms import submit_summoner_info
-from .serializers import Summoner_V3_Serializer, LiveMatchSerializer
-from .models import Summoner_V3
+from .serializers import Summoner_V3_Serializer, LiveMatchSerializer, ChampionInfoSerializer
+from .models import Summoner_V3, Champion
 from .data import platform
-from .API import get_live_match, validate_summoner_name
+from .API import get_live_match, validate_summoner_name, get_basic_champ_info, update_summoner_spell_info
 
 # 3rd party imports
 import requests
@@ -151,6 +156,50 @@ def live_match_detail(request, region, summoner_name):
         # replace this with summoner does not exist page
         return render(request, 'summoner_noexist.html', {'name': summoner, 'region': region})
 
+class ApiLiveMatch(APIView):
+
+    def get(self, request, region, summoner_name):
+        region = region.upper()
+        summoner = summoner_wrapper(name=summoner_name, region=region)
+
+        if summoner:
+            match_data = get_live_match(summoner.id, platform(region))
+            match_serialized = LiveMatchSerializer(data=match_data)
+
+            if match_serialized.is_valid():
+                match = match_serialized.save()
+                patch = settings.CURRENT_PATCH
+                
+                return Response(match_data)
+            else:
+                # return json with summoner in game
+                return None
+
+        else:
+            # return json with summoner does not exist
+            return None 
+
+class ChampionInfoView(APIView):
+
+    def get(self, request):
+        champions = Champion.objects.all()
+        serializer = ChampionInfoSerializer(champions, many=True)
+        return Response(serializer.data)
+
+    '''
+    def update(self, request):
+        champs = cass.get_champions()
+        for champ in champs:
+            champion = Champion(
+                id=champ.id,
+                name=champ.name,
+                key=champ.key
+            ).save()
+
+        return HttpResponse("OK")
+    '''
+
+        
 
 ##############
 #    TEST    #
@@ -175,7 +224,7 @@ class FrontendAppView(View):
     def get(self, request):
         try:
             with open(os.path.join(str(settings.REACT_APP_DIR), 'build', 'index.html')) as f:
-                print(f.read())
+                
                 html = f.read
                 test = 'test text'
                 #return HttpResponse('WHAT')

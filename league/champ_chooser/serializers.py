@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Summoner_V3, SummonerSpell
+from .models import Summoner_V3, SummonerSpell, Champion
 
 
 class Summoner_V3_Serializer(serializers.ModelSerializer):
@@ -150,3 +150,13 @@ class SummonerSpellSerializer(serializers.ModelSerializer):
         model = SummonerSpell
 
         fields = '__all__'
+
+###################
+#    Champions    #
+###################
+
+class ChampionInfoSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Champion
+        fields = ('id', 'name', 'key')

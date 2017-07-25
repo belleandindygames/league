@@ -87,7 +87,8 @@ MIDDLEWARE = [
 # MIGRATIONS CONFIGURATION
 # ------------------------------------------------------------------------------
 MIGRATION_MODULES = {
-    'sites': 'league.contrib.sites.migrations'
+    'sites': 'league.contrib.sites.migrations',
+    # 'champ_chooser': 'league.champ_chooser.migrations'
 }
 
 # DEBUG

@@ -21,3 +21,10 @@ class SummonerSpell(models.Model):
     name = models.CharField(max_length=50, default=None)
     key = models.CharField(max_length=60, default=None)
     description = models.CharField(max_length=500, default=None)
+
+class Champion(models.Model):
+    id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=20, default=None)
+    key = models.CharField(max_length=20, default=None)
+    
+

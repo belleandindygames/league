@@ -4,6 +4,8 @@ from django.conf import settings
 from .serializers import SummonerSpellSerializer
 import regex as re
 
+import cassiopeia as cass
+
 
 def get_summoner_info(name, region):
     url = "https://{region}.api.riotgames.com/lol/summoner/v3/summoners/by-name/{name}".format(region=region, name=name)
@@ -58,6 +60,12 @@ def update_summoner_spell_info():
         s = SummonerSpellSerializer(data=data['data'][d])
         if s.is_valid():
             s.save()
+
+def get_basic_champ_info():
+    champions = cass.get_champions()
+    for champ in champions:
+        print(champ.name)
+
 
 
 def validate_summoner_name(name):
