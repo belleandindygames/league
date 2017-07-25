@@ -9,9 +9,11 @@ __pycache__/
 **.json
 !*package.json
 
+
 # Distribution / packaging
 .Python
 env/
+**.env
 build/
 develop-eggs/
 dist/
