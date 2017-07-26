@@ -1,5 +1,6 @@
-import { Form, FormControl, FormGroup, Button, ButtonGroup } from 'react-bootstrap';
+import { Form, FormControl, FormGroup, Button } from 'react-bootstrap';
 import React, { Component } from 'react'
+import RegionRadioButtons from '../components/RegionRadioButtons'
 
 export default class SummonerForm extends Component {
   render () {
@@ -11,14 +12,7 @@ export default class SummonerForm extends Component {
     {' '}
     <FormGroup controlId="formInlineRegion">
       {' '}
-      <ButtonGroup>
-        <Button active>Radio 1
-          <input ref="input1" type="radio" name="radioButtonSet" value='input1' standalone defaultChecked/>
-        </Button>
-        <Button>Radio 2
-          <input ref="input2" type="radio" name="radioButtonSet" value='input2' standalone/>
-        </Button>
-      </ButtonGroup>
+      <RegionRadioButtons />
     </FormGroup>
     {' '}
     <Button bsStyle="primary" type="submit">
@@ -28,3 +22,6 @@ export default class SummonerForm extends Component {
     )
   }
 }
+
+
+
