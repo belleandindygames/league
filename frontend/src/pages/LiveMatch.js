@@ -3,7 +3,7 @@ import '../App.css';
 import CardLive from '../components/SummonerCardLive'
 import SummonerForm from '../components/summonerForm'
 import { Table } from 'react-bootstrap'
-import { fetchLiveMatch } from '../actions/liveMatchActions'
+//import { fetchLiveMatch } from '../actions/liveMatchActions'
 import { fetchChampionInfo } from '../actions/generalActions'
 import { connect } from 'react-redux'
 
@@ -21,7 +21,7 @@ const matchTableHeader = (
 )
 class LiveMatch extends Component {
   componentWillMount() {
-    //this.props.dispatch(fetchLiveMatch("na", "wiggily"))
+
     this.props.dispatch(fetchChampionInfo())
   }
   submitForm() {

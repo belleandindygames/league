@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import '../App.css'
 import { connect } from 'react-redux'
-import  { fetchUser } from "../actions/userActions"
+//import  { fetchUser } from "../actions/userActions"
 import { fetchTweets } from "../actions/tweetsActions"
-import { fetchChampionInfo } from  "../actions/generalActions"
+//import { fetchChampionInfo } from  "../actions/generalActions"
 
 class App extends Component {
   componentWillMount() {
@@ -15,9 +15,9 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.props)
+    
     const { user, tweets } = this.props
-
+    console.log(user, tweets)
     if (!tweets.length) {
       return <button onClick={this.fetchTweets.bind(this)}>load tweets</button>
     }
