@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import '../App.css';
 import CardLive from '../components/SummonerCardLive'
-import SummonerForm from '../components/summonerForm'
 import { Table } from 'react-bootstrap'
 //import { fetchLiveMatch } from '../actions/liveMatchActions'
 import { fetchChampionInfo } from '../actions/generalActions'
 import { connect } from 'react-redux'
+import LiveSummonerForm from '../components/summonerForm'
 
 
 const matchTableHeader = (
@@ -28,30 +28,37 @@ class LiveMatch extends Component {
 
   }
   render() {
-    const participants = this.props.match.participants
+    const participants = this.props.match.match.participants
     const redTeam = participants.filter((p) => p.teamId === 200)
     const blueTeam = participants.filter((p) => p.teamId === 100)
     const mappedRedTeam = redTeam.map(summoner =><CardLive summonerInfo={summoner} region="na"/>)
     const mappedBlueTeam = blueTeam.map(summoner => <CardLive summonerInfo={summoner} region="na"/>)
+    const { fetched, fetching } = this.props.match
+  
    
     return (
       <div className="container">
         <h1 className="App-intro">Live Match</h1>
         <div>
-          <SummonerForm />
+          <LiveSummonerForm />
         </div>
-        <Table hover bordered responsive>
-           {matchTableHeader}
-          <tbody>
-            {mappedRedTeam}
-          </tbody>
-        </Table>
-        <Table hover bordered responsive>
-           {matchTableHeader}
-          <tbody>
-            {mappedBlueTeam}
-          </tbody>
-        </Table>
+        { fetched &&
+        <div>
+          <Table hover bordered responsive>
+            {matchTableHeader}
+            <tbody>
+              {mappedRedTeam}
+            </tbody>
+          </Table>
+          <Table hover bordered responsive>
+            {matchTableHeader}
+            <tbody>
+              {mappedBlueTeam}
+            </tbody>
+          </Table>
+        </div>}
+        { fetching && 
+        <h2>Loading...</h2>}
       </div>
     );
   }
@@ -60,7 +67,7 @@ class LiveMatch extends Component {
 
  export default connect((store) => {
     return {
-      match: store.liveMatch.match,
+      match: store.liveMatch,
       champions: store.champions.champions,
     }
   })(LiveMatch)

@@ -17,16 +17,6 @@ function FieldGroup({ id, label, help, ...props }) {
 }
 
 class SummonerForm extends Component {
-  /*constructor (props) {
-    super(props)
-    this.state = { region: 'na1'}
-    this.setRegion = this.setRegion.bind(this)
-  }*/
-
-  setRegion () {
-      //console.log()    
-  }
-
   summonerInput({ input, meta: { touched, error}, ...custom}) {
     const hasError = touched && error !== undefined
     return (
@@ -41,22 +31,15 @@ class SummonerForm extends Component {
           label=""
           placeholder="Summoner..."
           {...input} {...custom}
-        />
-     
+        />     
       </div>
     )
   }
 
   regionsInput({ input, meta: { touched, error}, ...custom}) {
-    const hasError = touched && error !== undefined
     return (
       <div>
-        {hasError &&
-          <Message
-            error
-            header='Error'
-            content={error} />}
-            <RegionRadioButtons {...input} {...custom} />   
+         <RegionRadioButtons {...input} {...custom} />   
       </div>
     )
   }
@@ -72,7 +55,7 @@ class SummonerForm extends Component {
     return (
       <form onSubmit={handleSubmit(this.submit.bind(this))}>
         <Field name='summonerName' component={this.summonerInput} />
-        <Field name='region' component={this.regionsInput} type='radio' /*value={this.state.region} *//>
+        <Field name='region' component={this.regionsInput} type='radio' />
         <br />
         <Button type='submit'>Submit</Button>
       </form>
