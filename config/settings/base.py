@@ -66,7 +66,8 @@ LOCAL_APPS = [
     # custom users app
     # """ <customer users app> """
     # Your stuff: custom apps go here
-    'league.champ_chooser'#.apps.ChampChooserConfig',
+    'league.champ_chooser',#.apps.ChampChooserConfig',
+    'league.ranked_queue_stats'
 ]
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
