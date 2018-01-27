@@ -156,6 +156,7 @@ def live_match_detail(request, region, summoner_name):
         # replace this with summoner does not exist page
         return render(request, 'summoner_noexist.html', {'name': summoner, 'region': region})
 
+
 class ApiLiveMatch(APIView):
 
     def get(self, request, region, summoner_name):
@@ -178,6 +179,7 @@ class ApiLiveMatch(APIView):
         else:
             # return json with summoner does not exist
             return None 
+
 
 class ChampionInfoView(APIView):
 
