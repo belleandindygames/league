@@ -226,11 +226,9 @@ class FrontendAppView(View):
     def get(self, request):
         try:
             with open(os.path.join(str(settings.REACT_APP_DIR), 'build', 'index.html')) as f:
-                
-                html = f.read
-                test = 'test text'
-                #return HttpResponse('WHAT')
-                return render(request, 'index.html', {'test': test} )
+
+                return HttpResponse(f.read())
+
         except FileNotFoundError:
             logging.exception('App build not found')
             return HttpResponse(
@@ -238,6 +236,6 @@ class FrontendAppView(View):
             This URL for prod only, Use http://localhost:3000/ (yarn run start) in development 
             or (yarn run build) for generate the production bundle.
             """,
-            status=501,
-        )
-            
+                status=501,
+            )
+
