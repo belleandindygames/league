@@ -17,7 +17,18 @@ $ brew update
 $ brew install node
 $ npm install -g yarn
 $ yarn global add create-react-app
+$ yarn install
 ```
+
+## Create Yarn.js Build
+```bash
+$ yarn run build
+```
+to just run the js app
+```bash
+$ yarn run start
+```
+
 ## Run Server
 ```
 $ ./manage.py runserver
