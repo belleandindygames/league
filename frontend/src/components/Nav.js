@@ -27,7 +27,7 @@ export default class SiteNav extends Component {
         <Navbar.Header>
           <Navbar.Brand>
             {/*<img src={logo} alt='League App Logo' height={32} width={32}/>*/}
-            <LinkContainer to="/"><strong>League App | placeholder </strong></LinkContainer>
+            <LinkContainer to="/"><strong>League App | Something Else </strong></LinkContainer>
           </Navbar.Brand>
           <Navbar.Toggle />
         </Navbar.Header>
