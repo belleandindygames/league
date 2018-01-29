@@ -28,7 +28,7 @@ class LiveMatch extends Component {
 
   }
   render() {
-    const participants = this.props.match.match.participants
+    const { participants } = this.props.match.match
     const redTeam = participants.filter((p) => p.teamId === 200)
     const blueTeam = participants.filter((p) => p.teamId === 100)
     const mappedRedTeam = redTeam.map(summoner =><CardLive summonerInfo={summoner} region="na"/>)
