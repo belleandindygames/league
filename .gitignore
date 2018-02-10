@@ -8,7 +8,7 @@ __pycache__/
 **.idea
 **.json
 !*package.json
-
+venv/
 
 # Distribution / packaging
 .Python
