@@ -32,7 +32,7 @@ export default class SiteNav extends Component {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Nav bsStyle="pills" activeKey={this.state.activeKey} onSelect={this.handleSelect.bind(this)}>
+          <Nav bsStyle="pills" activeKey={this.state.activeKey} onSelect={this.handleSelect.bind(this)} pullRight>
             <LinkContainer to="/live"><NavItem eventKey={1}>Live Match Search</NavItem></LinkContainer>
             <LinkContainer to="/stats"><NavItem eventKey={2}>Summoner Stats</NavItem></LinkContainer>
             <LinkContainer to="/about"><NavItem eventKey={3}>About</NavItem></LinkContainer>
