@@ -21,6 +21,8 @@ from django.views.generic import TemplateView
 from django.views import defaults as default_views
 
 
+
+
 urlpatterns = [
     # url(r'^$', TemplateView.as_view(template_name='pages/home.html'), name='home'),
     # url(r'^about/$', TemplateView.as_view(template_name='pages/about.html'), name='about'),
@@ -30,7 +32,8 @@ urlpatterns = [
     
 
     # champ_chooser urls
-    url(r'^app/', include('league.champ_chooser.urls', namespace='app')),
+    # removed namespace here for django 2.0 compatibility
+    url(r'^app/', include('league.champ_chooser.urls')),
 ]
 
 if settings.DEBUG:
