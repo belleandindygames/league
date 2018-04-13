@@ -1,3 +1,5 @@
+"""
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -23,3 +25,4 @@ def ranked_stats(request):
         form = submit_summoner_info()
 
     return render(request, 'live_match.html', {'form': form})
+"""

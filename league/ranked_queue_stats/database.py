@@ -1,3 +1,5 @@
+'''
+
 import sqlite3
 
 conn = sqlite3.connect('league_rank.db')
@@ -72,3 +74,4 @@ def add_user_information(summonerName, accountId, timestamp):
     c.execute("INSERT INTO users(summonerName, accountId, timestamp) VALUES(?, ?, ?)",
               (summonerName, accountId, timestamp))
     conn.commit()
+'''

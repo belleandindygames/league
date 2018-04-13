@@ -1,3 +1,7 @@
+
+
+"""
+
 from django.db import models
 
 
@@ -19,5 +23,5 @@ class Gamelist(models.Model):
     role = models.Charfield(max_length=30)
     lane = models.Charfield(max_length=30)
     win = models.Charfield(max_length=30)
-
+"""
 
