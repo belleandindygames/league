@@ -6,7 +6,7 @@ wheel==0.30.0
 
 
 # Bleeding edge Django
-Django==2.0.1
+Django==2.2.13
 django-bootstrap3==9.1.0
 djangorestframework==3.7.7
 
